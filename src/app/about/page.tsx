@@ -1,9 +1,13 @@
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "About | SocialRank SEO - Social Media SEO Agency",
+  title: "About Us | Expert Social Media SEO Team | SocialRank SEO",
   description:
-    "Learn about SocialRank SEO — our mission, team, and approach to social media search engine optimization.",
+    "Meet the SocialRank SEO team. We're social media SEO experts dedicated to helping brands dominate search on Instagram, TikTok, LinkedIn, and YouTube. Learn about our mission and values.",
+  openGraph: {
+    title: "About SocialRank SEO | Your Social Media SEO Partners",
+    description: "Expert team delivering data-driven social media SEO strategies for measurable growth.",
+  },
 };
 
 const team = [

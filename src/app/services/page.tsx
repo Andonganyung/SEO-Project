@@ -1,10 +1,24 @@
 import type { Metadata } from "next";
 import Link from "next/link";
+import { generateFAQSchema } from "@/config/seo";
 
 export const metadata: Metadata = {
-  title: "Services | SocialRank SEO - Social Media SEO Agency",
+  title: "Social Media SEO Services | Instagram, TikTok, LinkedIn Optimization",
   description:
-    "Explore our social media SEO services: profile optimization, content strategy, hashtag research, analytics, and more.",
+    "Expert social media SEO services: profile optimization, content strategy, hashtag research, video SEO, link building, and analytics. Boost your rankings on Instagram, TikTok, LinkedIn, and more.",
+  keywords: [
+    "social media SEO services",
+    "Instagram SEO",
+    "TikTok SEO",
+    "LinkedIn optimization",
+    "YouTube SEO",
+    "hashtag research",
+    "social media optimization",
+  ],
+  openGraph: {
+    title: "Social Media SEO Services | Boost Your Social Rankings",
+    description: "Professional social media SEO services to increase your visibility and engagement across all platforms.",
+  },
 };
 
 const services = [
@@ -77,9 +91,22 @@ const services = [
 ];
 
 export default function ServicesPage() {
+  const faqs = [
+    { question: "What is social media SEO?", answer: "Social media SEO is the practice of optimizing your social media profiles and content to rank higher in both social platform search results and traditional search engines like Google." },
+    { question: "How long does it take to see results?", answer: "Most clients see measurable improvements in 30-60 days. Social media SEO is an ongoing process that compounds over time." },
+    { question: "Which platforms do you optimize?", answer: "We optimize all major platforms including Instagram, LinkedIn, TikTok, YouTube, Facebook, Twitter, and Pinterest." },
+  ];
+
+  const faqSchema = generateFAQSchema(faqs);
+
   return (
-    <div className="pt-24 pb-20">
-      <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+    <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }}
+      />
+      <div className="pt-24 pb-20">
+        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <div className="text-center mb-16">
           <h1 className="text-4xl sm:text-5xl font-extrabold">
             Our <span className="text-[var(--primary)]">Services</span>
@@ -125,5 +152,6 @@ export default function ServicesPage() {
         </div>
       </div>
     </div>
+    </>
   );
 }

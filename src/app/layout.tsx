@@ -2,39 +2,64 @@ import type { Metadata } from "next";
 import "./globals.css";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
+import Analytics from "@/components/Analytics";
+import { seoConfig, generateOrganizationSchema, generateWebsiteSchema } from "@/config/seo";
 
 export const metadata: Metadata = {
-  title: "SocialRank SEO | Social Media SEO Agency",
-  description:
-    "We boost your brand visibility across social media platforms with data-driven SEO strategies. Expert social media optimization, content strategy, and analytics.",
-  keywords: [
-    "social media SEO",
-    "social media optimization",
-    "SMO",
-    "social media marketing",
-    "SEO agency",
-    "social media strategy",
-    "content optimization",
-    "brand visibility",
-  ],
+  metadataBase: new URL(seoConfig.siteUrl),
+  title: {
+    default: `${seoConfig.siteName} | Social Media SEO Agency`,
+    template: `%s | ${seoConfig.siteName}`,
+  },
+  description: seoConfig.siteDescription,
+  keywords: seoConfig.keywords,
+  authors: [{ name: seoConfig.businessName }],
+  creator: seoConfig.businessName,
+  publisher: seoConfig.businessName,
+  
   openGraph: {
-    title: "SocialRank SEO | Social Media SEO Agency",
-    description:
-      "Boost your brand visibility across social media with data-driven SEO strategies.",
-    url: "https://socialrankseo.com",
-    siteName: "SocialRank SEO",
     type: "website",
     locale: "en_US",
+    url: seoConfig.siteUrl,
+    title: `${seoConfig.siteName} | Social Media SEO Agency`,
+    description: seoConfig.siteDescription,
+    siteName: seoConfig.siteName,
+    images: [
+      {
+        url: seoConfig.ogImage,
+        width: 1200,
+        height: 630,
+        alt: `${seoConfig.siteName} - Social Media SEO`,
+      },
+    ],
   },
+  
   twitter: {
     card: "summary_large_image",
-    title: "SocialRank SEO | Social Media SEO Agency",
-    description:
-      "Boost your brand visibility across social media with data-driven SEO strategies.",
+    title: `${seoConfig.siteName} | Social Media SEO Agency`,
+    description: seoConfig.siteDescription,
+    images: [seoConfig.ogImage],
+    creator: "@socialrankseo",
   },
+  
   robots: {
     index: true,
     follow: true,
+    googleBot: {
+      index: true,
+      follow: true,
+      "max-video-preview": -1,
+      "max-image-preview": "large",
+      "max-snippet": -1,
+    },
+  },
+  
+  verification: {
+    google: seoConfig.googleSiteVerification || undefined,
+  },
+  
+  alternates: {
+    canonical: seoConfig.siteUrl,
   },
 };
 
@@ -43,31 +68,29 @@ export default function RootLayout({
 }: {
   children: React.ReactNode;
 }) {
+  const organizationSchema = generateOrganizationSchema();
+  const websiteSchema = generateWebsiteSchema();
+
   return (
     <html lang="en">
       <head>
+        {/* Organization Schema */}
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{
-            __html: JSON.stringify({
-              "@context": "https://schema.org",
-              "@type": "ProfessionalService",
-              name: "SocialRank SEO",
-              description:
-                "Social Media SEO Agency specializing in brand visibility and social media optimization.",
-              url: "https://socialrankseo.com",
-              serviceType: "Social Media SEO",
-              areaServed: "Worldwide",
-              sameAs: [
-                "https://twitter.com/socialrankseo",
-                "https://linkedin.com/company/socialrankseo",
-                "https://facebook.com/socialrankseo",
-              ],
-            }),
+            __html: JSON.stringify(organizationSchema),
+          }}
+        />
+        {/* WebSite Schema */}
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify(websiteSchema),
           }}
         />
       </head>
       <body className="bg-[var(--dark)] text-white antialiased">
+        <Analytics />
         <Navbar />
         <main>{children}</main>
         <Footer />

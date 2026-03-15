@@ -1,6 +1,20 @@
 import Link from "next/link";
+import { FaFacebook, FaInstagram, FaTwitter, FaLinkedin, FaYoutube, FaTiktok, FaPinterest } from "react-icons/fa";
+import { seoConfig } from "@/config/seo";
 
 export default function Footer() {
+  const { socialLinks, businessEmail } = seoConfig;
+
+  const socialIcons = [
+    { name: "Facebook", icon: FaFacebook, url: socialLinks.facebook, color: "hover:text-[#1877F2]" },
+    { name: "Instagram", icon: FaInstagram, url: socialLinks.instagram, color: "hover:text-[#E4405F]" },
+    { name: "Twitter", icon: FaTwitter, url: socialLinks.twitter, color: "hover:text-[#1DA1F2]" },
+    { name: "LinkedIn", icon: FaLinkedin, url: socialLinks.linkedin, color: "hover:text-[#0A66C2]" },
+    { name: "YouTube", icon: FaYoutube, url: socialLinks.youtube, color: "hover:text-[#FF0000]" },
+    { name: "TikTok", icon: FaTiktok, url: socialLinks.tiktok, color: "hover:text-[#00F2EA]" },
+    { name: "Pinterest", icon: FaPinterest, url: socialLinks.pinterest, color: "hover:text-[#E60023]" },
+  ];
+
   return (
     <footer className="bg-[var(--dark-light)] border-t border-white/10">
       <div className="mx-auto max-w-7xl px-4 py-12 sm:px-6 lg:px-8">
@@ -10,9 +24,14 @@ export default function Footer() {
               <span className="text-[var(--primary)]">Social</span>
               <span className="text-[var(--secondary)]">Rank</span> SEO
             </h3>
-            <p className="text-gray-400 text-sm">
+            <p className="text-gray-400 text-sm mb-4">
               Data-driven social media SEO strategies to amplify your brand across every platform.
             </p>
+            {businessEmail && (
+              <a href={`mailto:${businessEmail}`} className="text-sm text-gray-400 hover:text-[var(--primary)] transition">
+                {businessEmail}
+              </a>
+            )}
           </div>
 
           <div>
@@ -36,13 +55,27 @@ export default function Footer() {
           </div>
 
           <div>
-            <h4 className="font-semibold mb-4">Connect</h4>
-            <ul className="space-y-2 text-gray-400 text-sm">
-              <li><a href="#" className="hover:text-white transition">Twitter / X</a></li>
-              <li><a href="#" className="hover:text-white transition">LinkedIn</a></li>
-              <li><a href="#" className="hover:text-white transition">Instagram</a></li>
-              <li><a href="#" className="hover:text-white transition">Facebook</a></li>
-            </ul>
+            <h4 className="font-semibold mb-4">Follow Us</h4>
+            <div className="flex flex-wrap gap-3">
+              {socialIcons.map((social) => {
+                const Icon = social.icon;
+                return (
+                  <a
+                    key={social.name}
+                    href={social.url}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className={`p-2 rounded-full bg-white/10 ${social.color} transition`}
+                    aria-label={`Follow us on ${social.name}`}
+                  >
+                    <Icon className="w-5 h-5" />
+                  </a>
+                );
+              })}
+            </div>
+            <p className="text-gray-400 text-xs mt-4">
+              Connect with us on social media for tips, updates, and industry insights.
+            </p>
           </div>
         </div>
 
